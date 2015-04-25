@@ -1,0 +1,13 @@
+ <!doctype html>
+ 	<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+ 	<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <title>Upload new File</title>
+    <h1>Upload new3 File</h1>
+    <form method="POST" enctype="multipart/form-data action" action="/upload">
+     	<input type='file' name='files[]' multiple="">
+         <input type="submit" value="add">
+    </form>
+sdfdsf
+
+    <form action="/upload-target" class="dropzone dz-clickable"><div class="dz-default dz-message"><span>Drop files here to upload</span></div></form>
+    <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">

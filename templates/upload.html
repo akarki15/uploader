@@ -1,0 +1,15 @@
+ <!doctype html>
+    
+	<!--library for drag and drop  
+ 	<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+ 	<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+	-->
+
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+	<!-- <form action="/" class="dropzone">	
+	</form> -->
+    <form method="POST" enctype="multipart/form-data" action="/upload">
+	  	<input type="file" name="file[]" multiple="">
+	  	<input type="submit" value="add">
+	</form>
