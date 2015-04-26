@@ -2,11 +2,12 @@
 <title>Uploader</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
-  <h1>Upload Dicom files</h1>
+  <h1> Dicom Files Database</h1>
   <div class=metanav>
   {% if not session.logged_in %}
     <a href="{{ url_for('login') }}">log in</a>
-  {% else %}
+  {% else %}  
+    {{ session['username'] }} 
     <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
   </div>

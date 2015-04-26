@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  {% if session.logged_in %}    
+<!-- 
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
         <dt>Title:
@@ -9,13 +11,25 @@
         <dd><textarea name=text rows=5 cols=40></textarea>
         <dd><input type=submit value=Share>
       </dl>
-    </form>
+    </form>  -->
+
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_entry') }}">
+    <p>  <input type="file" name="file[]" multiple="">
+    
+      <input type="text" class="hint" value="Enter tags separated by comma" size =50 name="tags"
+    onfocus="if (this.className=='hint') { this.className = ''; this.value = ''; }"
+    onblur="if (this.value == '') { this.className = 'hint'; this.value = 'Enter tags separated by comma'; }">
+    <p>
+      <input type="submit" value="Upload">
+  </form>
+
+
   {% endif %}
-  <ul class=entries>
+  <!-- <ul class=entries>
   {% for entry in entries %}
     <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
   {% endfor %}
-  </ul>
+  </ul> -->
 {% endblock %}
