@@ -12,7 +12,7 @@
         <dd><input type=submit value=Share>
       </dl>
     </form>  -->
-
+  <p>
   <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_entry') }}">
     <p>  <input type="file" name="file[]" multiple="">
     
@@ -22,14 +22,31 @@
     <p>
       <input type="submit" value="Upload">
   </form>
-
+  </p>
 
   {% endif %}
-  <!-- <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
+  <hr>
+  {% if entries %}
+  <table class ="gridtable">
+    <tr>
+    <th>ID </th>
+    <th>File name</th>
+    <th>Patient name</th>
+    <th>Patient ID</th>
+    <th>Annotation</th>    
+    </tr>  
+    {% for entry in entries %}    
+    <tr>
+    <td>{{entry.id}} </td>
+    <td>{{entry.filename}}</td>
+    <td>{{entry.patientname}}</td>
+    <td>{{entry.patientid}}</td>
+    <td>{{entry.annotation}}</td>    
+    </tr>  
   {% endfor %}
-  </ul> -->
+  {% else %}
+    <em> No uploads! </em>
+    {% endif %}
+  
+  
 {% endblock %}

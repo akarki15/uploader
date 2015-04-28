@@ -1,5 +1,6 @@
 create table if not exists entries (
   id integer primary key autoincrement,
+  username text, 
   filename text not null,
   annotation text,
   patientname text,

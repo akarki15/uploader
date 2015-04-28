@@ -46,9 +46,14 @@ def show_entries():
 	entries = ""
 	if not session.get('logged_in'):
 		return render_template('login.html')
-	# cur = g.db.execute('select title, text from entries order by id desc')
-	# entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-	# return render_template('show_entries.html', entries=entries)
+	# id integer primary key autoincrement,
+ #  filename text not null,
+ #  annotation text,
+ #  patientname text,
+ #  patientid text
+ 	t = (session['username'],)
+	cur = g.db.execute('SELECT id, filename, patientname, patientid, annotation from entries where  username = ? order by id desc ', t)
+	entries = [dict(id=row[0], filename=row[1], patientname=row[2], patientid=row[3], annotation=row[4]) for row in cur.fetchall()]	
 	return render_template('show_entries.html',entries=entries)
 
 @app.route('/add', methods=['POST'])
@@ -72,8 +77,8 @@ def add_entry():
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			
 			# extracts info from dicom, insert tuple into record
-			entry = (filename, tags, ds.PatientName, ds.PatientID)
-			g.db.execute('INSERT INTO entries (filename, annotation, patientname, patientid) VALUES (?,?,?,?)', entry)	
+			entry = (session['username'],filename, tags, ds.PatientName, ds.PatientID)
+			g.db.execute('INSERT INTO entries (username, filename, annotation, patientname, patientid) VALUES (?,?,?,?,?)', entry)	
 			g.db.commit()
 
 
@@ -126,15 +131,19 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
 	error = None
 	if request.method == 'POST':
-		if not checkCredentials(request.form['username']):
+		if request.form['username']=="":
+			print "wow12"
+			error = "Username cannot be blank!"
+		elif not checkCredentials(request.form['username']):
 			createAccount(request.form['username'], request.form['password'])            			
 			flash('Account created!')
 			return render_template('login.html', error=error)
 		else:
 			error = 'Username already exists. Go to login page.'        			
-	return render_template('signup.html')
+	return render_template('signup.html', error=error)
 
 #########END OF MAIN STUFF################
 def checkCredentials(inputU):	
